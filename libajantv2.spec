@@ -7,13 +7,14 @@
 #
 Name     : libajantv2
 Version  : 17.0.1
-Release  : 1
+Release  : 2
 URL      : https://github.com/aja-video/libajantv2/archive/ntv2_17_0_1/libajantv2-17.0.1.tar.gz
 Source0  : https://github.com/aja-video/libajantv2/archive/ntv2_17_0_1/libajantv2-17.0.1.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
 Requires: libajantv2-bin = %{version}-%{release}
+Requires: libajantv2-lib = %{version}-%{release}
 Requires: libajantv2-license = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-kde
@@ -45,12 +46,22 @@ bin components for the libajantv2 package.
 %package dev
 Summary: dev components for the libajantv2 package.
 Group: Development
+Requires: libajantv2-lib = %{version}-%{release}
 Requires: libajantv2-bin = %{version}-%{release}
 Provides: libajantv2-devel = %{version}-%{release}
 Requires: libajantv2 = %{version}-%{release}
 
 %description dev
 dev components for the libajantv2 package.
+
+
+%package lib
+Summary: lib components for the libajantv2 package.
+Group: Libraries
+Requires: libajantv2-license = %{version}-%{release}
+
+%description lib
+lib components for the libajantv2 package.
 
 
 %package license
@@ -70,7 +81,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1716927932
+export SOURCE_DATE_EPOCH=1716928766
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -88,7 +99,20 @@ FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
 export GOAMD64=v2
-%cmake ..
+%cmake .. -DAJANTV2_BUILD_OPENSOURCE=ON \
+-DAJANTV2_BUILD_SHARED=ON \
+-DAJANTV2_DISABLE_DEMOS=ON \
+-DAJANTV2_DISABLE_DRIVER=ON \
+-DAJANTV2_DISABLE_PLUGINS=ON \
+-DAJANTV2_DISABLE_TESTS=ON \
+-DAJANTV2_DISABLE_TOOLS=OFF \
+-DAJA_DISABLE_AMD=ON \
+-DAJA_DISABLE_NVIDIA=ON \
+-DAJA_DISABLE_QT=ON \
+-DAJA_INSTALL_CMAKE=OFF \
+-DAJA_INSTALL_HEADERS=ON \
+-DAJA_INSTALL_MISC=OFF \
+-DAJA_INSTALL_SOURCES=OFF
 make  %{?_smp_mflags}
 popd
 
@@ -107,7 +131,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1716927932
+export SOURCE_DATE_EPOCH=1716928766
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libajantv2
 cp %{_builddir}/libajantv2-ntv2_17_0_1/LICENSE %{buildroot}/usr/share/package-licenses/libajantv2/b8f05a1bbe2c79f613b47b1ab5c71c9e8c6067b4 || :
@@ -119,172 +143,11 @@ popd
 
 %files
 %defattr(-,root,root,-)
-/usr/libajantv2/.gitignore
-/usr/libajantv2/CMakeLists.txt
-/usr/libajantv2/ajantv2/CMakeLists.txt
-/usr/libajantv2/ajantv2/Makefile
-/usr/libajantv2/ajantv2/build/Makefile
-/usr/libajantv2/ajantv2/includes/ajaexport.h
-/usr/libajantv2/ajantv2/includes/ajatypes.h
-/usr/libajantv2/ajantv2/includes/ntv2audiodefines.h
-/usr/libajantv2/ajantv2/includes/ntv2devicefeatures.h
-/usr/libajantv2/ajantv2/includes/ntv2devicefeatures.hh
-/usr/libajantv2/ajantv2/includes/ntv2driverprocamp.h
-/usr/libajantv2/ajantv2/includes/ntv2enums.h
-/usr/libajantv2/ajantv2/includes/ntv2fixed.h
-/usr/libajantv2/ajantv2/includes/ntv2publicinterface.h
-/usr/libajantv2/ajantv2/includes/ntv2version.h
-/usr/libajantv2/ajantv2/includes/ntv2videodefines.h
-/usr/libajantv2/ajantv2/includes/ntv2virtualregisters.h
-/usr/libajantv2/ajantv2/includes/ntv2vpidfromspec.h
-/usr/libajantv2/ajantv2/src/lin/ntv2linuxpublicinterface.h
-/usr/libajantv2/ajantv2/src/targets.mk
-/usr/libajantv2/ajantv2/test/CMakeLists.txt
-/usr/libajantv2/demos/CMakeLists.txt
-/usr/libajantv2/demos/ntv2burn/CMakeLists.txt
-/usr/libajantv2/demos/ntv2burn/Makefile
-/usr/libajantv2/demos/ntv2burn4kquadrant/CMakeLists.txt
-/usr/libajantv2/demos/ntv2burn4kquadrant/Makefile
-/usr/libajantv2/demos/ntv2capture/CMakeLists.txt
-/usr/libajantv2/demos/ntv2capture/Makefile
-/usr/libajantv2/demos/ntv2capture4k/CMakeLists.txt
-/usr/libajantv2/demos/ntv2capture4k/Makefile
-/usr/libajantv2/demos/ntv2capture8k/CMakeLists.txt
-/usr/libajantv2/demos/ntv2capture8k/Makefile
-/usr/libajantv2/demos/ntv2dolbycapture/CMakeLists.txt
-/usr/libajantv2/demos/ntv2dolbycapture/Makefile
-/usr/libajantv2/demos/ntv2dolbyplayer/CMakeLists.txt
-/usr/libajantv2/demos/ntv2dolbyplayer/Makefile
-/usr/libajantv2/demos/ntv2enumerateboards/CMakeLists.txt
-/usr/libajantv2/demos/ntv2enumerateboards/Makefile
-/usr/libajantv2/demos/ntv2fieldburn/CMakeLists.txt
-/usr/libajantv2/demos/ntv2fieldburn/Makefile
-/usr/libajantv2/demos/ntv2hdrsetup/CMakeLists.txt
-/usr/libajantv2/demos/ntv2hdrsetup/Makefile
-/usr/libajantv2/demos/ntv2konaipj2ksetup/CMakeLists.txt
-/usr/libajantv2/demos/ntv2konaipj2ksetup/Makefile
-/usr/libajantv2/demos/ntv2konaipjsonsetup/CMakeLists.txt
-/usr/libajantv2/demos/ntv2konaipjsonsetup/Makefile
-/usr/libajantv2/demos/ntv2konaipjsonsetup/konaipsetup2022_12.json
-/usr/libajantv2/demos/ntv2konaipjsonsetup/konaipsetup2022_6_2p2.json
-/usr/libajantv2/demos/ntv2konaipjsonsetup/konaipsetup2022_6rx.json
-/usr/libajantv2/demos/ntv2konaipjsonsetup/konaipsetup2022_6tx.json
-/usr/libajantv2/demos/ntv2konaipjsonsetup/konaipsetup2022_7rx.json
-/usr/libajantv2/demos/ntv2konaipjsonsetup/konaipsetup2022_7tx.json
-/usr/libajantv2/demos/ntv2konaipjsonsetup/ntv2konaipjsonsetup.pro
-/usr/libajantv2/demos/ntv2konaipjsonsetup/t21102rx_2tx.json
-/usr/libajantv2/demos/ntv2konaipjsonsetup/t2110_combo-1.json
-/usr/libajantv2/demos/ntv2konaipjsonsetup/t2110_combo-2.json
-/usr/libajantv2/demos/ntv2llburn/CMakeLists.txt
-/usr/libajantv2/demos/ntv2llburn/Makefile
-/usr/libajantv2/demos/ntv2outputtestpattern/CMakeLists.txt
-/usr/libajantv2/demos/ntv2outputtestpattern/Makefile
-/usr/libajantv2/demos/ntv2player/CMakeLists.txt
-/usr/libajantv2/demos/ntv2player/Makefile
-/usr/libajantv2/demos/ntv2player4k/CMakeLists.txt
-/usr/libajantv2/demos/ntv2player4k/Makefile
-/usr/libajantv2/demos/ntv2player8k/CMakeLists.txt
-/usr/libajantv2/demos/ntv2player8k/Makefile
-/usr/libajantv2/demos/ntv2streamplayer/CMakeLists.txt
-/usr/libajantv2/demos/ntv2streamplayer/Makefile
-/usr/libajantv2/demos/ntv2switchbitfile/CMakeLists.txt
-/usr/libajantv2/demos/ntv2switchbitfile/Makefile
-/usr/libajantv2/driver/CMakeLists.txt
-/usr/libajantv2/driver/configure.mk
-/usr/libajantv2/driver/linux/.gitignore
-/usr/libajantv2/driver/linux/Makefile
-/usr/libajantv2/driver/linux/buildenv.h
-/usr/libajantv2/driver/linux/dkms.conf
-/usr/libajantv2/driver/linux/driverdbg.h
-/usr/libajantv2/driver/linux/fs1wait.h
-/usr/libajantv2/driver/linux/ntv2dma.h
-/usr/libajantv2/driver/linux/ntv2driver.h
-/usr/libajantv2/driver/linux/ntv2driverautocirculate.h
-/usr/libajantv2/driver/linux/ntv2driverbigphysarea.h
-/usr/libajantv2/driver/linux/ntv2driverdbgmsgctl.h
-/usr/libajantv2/driver/linux/ntv2driverstatus.h
-/usr/libajantv2/driver/linux/ntv2drivertask.h
-/usr/libajantv2/driver/linux/ntv2kona2.h
-/usr/libajantv2/driver/linux/ntv2serial.h
-/usr/libajantv2/driver/linux/nvidia-ko-to-module-symvers
-/usr/libajantv2/driver/linux/registerio.h
-/usr/libajantv2/driver/ntv2anc.h
-/usr/libajantv2/driver/ntv2audio.h
-/usr/libajantv2/driver/ntv2autocirc.h
-/usr/libajantv2/driver/ntv2autofunc.h
-/usr/libajantv2/driver/ntv2aux.h
-/usr/libajantv2/driver/ntv2commonreg.h
-/usr/libajantv2/driver/ntv2displayid.h
-/usr/libajantv2/driver/ntv2gen2regs.h
-/usr/libajantv2/driver/ntv2gen2regs_8a34045.h
-/usr/libajantv2/driver/ntv2gen2regs_rc32012a.h
-/usr/libajantv2/driver/ntv2genlock.h
-/usr/libajantv2/driver/ntv2genlock2.h
-/usr/libajantv2/driver/ntv2genregs.h
-/usr/libajantv2/driver/ntv2hdmiedid.h
-/usr/libajantv2/driver/ntv2hdmiin.h
-/usr/libajantv2/driver/ntv2hdmiin4.h
-/usr/libajantv2/driver/ntv2hdmiout4.h
-/usr/libajantv2/driver/ntv2hin4reg.h
-/usr/libajantv2/driver/ntv2hinreg.h
-/usr/libajantv2/driver/ntv2hout4reg.h
-/usr/libajantv2/driver/ntv2infoframe.h
-/usr/libajantv2/driver/ntv2kona.h
-/usr/libajantv2/driver/ntv2mcap.h
-/usr/libajantv2/driver/ntv2pciconfig.h
-/usr/libajantv2/driver/ntv2rp188.h
-/usr/libajantv2/driver/ntv2setup.h
-/usr/libajantv2/driver/ntv2stream.h
-/usr/libajantv2/driver/ntv2system.h
-/usr/libajantv2/driver/ntv2video.h
-/usr/libajantv2/driver/ntv2videoraster.h
-/usr/libajantv2/driver/ntv2videorasterreg.h
-/usr/libajantv2/driver/ntv2vpid.h
-/usr/libajantv2/driver/ntv2xpt.h
-/usr/libajantv2/driver/ntv2xptlookup.h
-/usr/libajantv2/driver/sdkversion.mk
-/usr/libajantv2/legacy/build/common.mk
-/usr/libajantv2/legacy/build/configure.mk
-/usr/libajantv2/legacy/build/internal.mk
-/usr/libajantv2/legacy/build/qt.mk
-/usr/libajantv2/legacy/build/sdkversion.mk
-/usr/libajantv2/legacy/build/targets.mk
-/usr/libajantv2/plugins/CMakeLists.txt
-/usr/libajantv2/tools/CMakeLists.txt
-/usr/libajantv2/tools/logreader/CMakeLists.txt
-/usr/libajantv2/tools/ntv2firmwareinstaller/CMakeLists.txt
-/usr/libajantv2/tools/ntv2firmwareinstaller/Makefile
-/usr/libajantv2/tools/ntv2thermo/CMakeLists.txt
-/usr/libajantv2/tools/ntv2thermo/Makefile
-/usr/libajantv2/tools/pciwhacker/CMakeLists.txt
-/usr/libajantv2/tools/pciwhacker/Makefile
-/usr/libajantv2/tools/regio/CMakeLists.txt
-/usr/libajantv2/tools/regio/Makefile
-/usr/libajantv2/tools/supportlog/CMakeLists.txt
 
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/logreader
-/usr/bin/ntv2burn
-/usr/bin/ntv2burn4kquadrant
-/usr/bin/ntv2capture
-/usr/bin/ntv2capture4k
-/usr/bin/ntv2capture8k
-/usr/bin/ntv2dolbycapture
-/usr/bin/ntv2dolbyplayer
-/usr/bin/ntv2enumerateboards
-/usr/bin/ntv2fieldburn
 /usr/bin/ntv2firmwareinstaller
-/usr/bin/ntv2hdrsetup
-/usr/bin/ntv2konaipj2ksetup
-/usr/bin/ntv2konaipjsonsetup
-/usr/bin/ntv2llburn
-/usr/bin/ntv2outputtestpattern
-/usr/bin/ntv2player
-/usr/bin/ntv2player4k
-/usr/bin/ntv2player8k
-/usr/bin/ntv2streamplayer
-/usr/bin/ntv2switchbitfile
 /usr/bin/ntv2thermo
 /usr/bin/pciwhacker
 /usr/bin/regio
@@ -440,6 +303,11 @@ popd
 /usr/include/libajantv2/ajantv2/src/win/ntv2winpublicinterface.h
 /usr/include/libajantv2/ajantv2/utilityfiles/public/ntv2firmwareinstallerthread.h
 /usr/include/libajantv2/ajantv2/utilityfiles/public/ntv2hevcfirmwareinstallerthread.h
+/usr/lib64/libajantv2.so
+
+%files lib
+%defattr(-,root,root,-)
+/usr/lib64/libajantv2.so.17.0.1.0
 
 %files license
 %defattr(0644,root,root,0755)
