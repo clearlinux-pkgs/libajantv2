@@ -7,7 +7,7 @@
 #
 Name     : libajantv2
 Version  : 17.0.1
-Release  : 2
+Release  : 3
 URL      : https://github.com/aja-video/libajantv2/archive/ntv2_17_0_1/libajantv2-17.0.1.tar.gz
 Source0  : https://github.com/aja-video/libajantv2/archive/ntv2_17_0_1/libajantv2-17.0.1.tar.gz
 Summary  : No detailed summary available
@@ -81,7 +81,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1716928766
+export SOURCE_DATE_EPOCH=1716929376
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -131,7 +131,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1716928766
+export SOURCE_DATE_EPOCH=1716929376
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libajantv2
 cp %{_builddir}/libajantv2-ntv2_17_0_1/LICENSE %{buildroot}/usr/share/package-licenses/libajantv2/b8f05a1bbe2c79f613b47b1ab5c71c9e8c6067b4 || :
@@ -140,18 +140,19 @@ GOAMD64=v2
 pushd clr-build
 %make_install
 popd
+## Remove excluded files
+rm -f %{buildroot}*/usr/bin/logreader
+rm -f %{buildroot}*/usr/bin/pciwhacker
+rm -f %{buildroot}*/usr/bin/regio
+rm -f %{buildroot}*/usr/bin/supportlog
 
 %files
 %defattr(-,root,root,-)
 
 %files bin
 %defattr(-,root,root,-)
-/usr/bin/logreader
 /usr/bin/ntv2firmwareinstaller
 /usr/bin/ntv2thermo
-/usr/bin/pciwhacker
-/usr/bin/regio
-/usr/bin/supportlog
 
 %files dev
 %defattr(-,root,root,-)
