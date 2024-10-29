@@ -7,7 +7,7 @@
 #
 Name     : libajantv2
 Version  : 17.0.1
-Release  : 3
+Release  : 4
 URL      : https://github.com/aja-video/libajantv2/archive/ntv2_17_0_1/libajantv2-17.0.1.tar.gz
 Source0  : https://github.com/aja-video/libajantv2/archive/ntv2_17_0_1/libajantv2-17.0.1.tar.gz
 Summary  : No detailed summary available
